@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What type of encounter did you have?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["encounter-type"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["encounter-type"], href: "#encounter-type" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "encounter-type",
+      fieldset: {
+        legend: {
+          text: "What type of encounter did you have?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Choose the option that best describes your experience" },
+      errorMessage: errors["encounter-type"] if errors else null,
+      value: data["encounter-type"],
+      items: [
+        { value: "i-saw-a-ufo-or-spacecraft", text: "I saw a UFO or spacecraft" },
+        { value: "i-had-direct-contact-with-alien-beings", text: "I had direct contact with alien beings" },
+        { value: "i-found-physical-evidence-of-alien-activity", text: "I found physical evidence of alien activity" },
+        { value: "i-experienced-unexplained-phenomena", text: "I experienced unexplained phenomena" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
