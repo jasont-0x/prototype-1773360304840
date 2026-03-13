@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your answers before sending" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    <h1 class="govuk-heading-xl">Check your answers before sending</h1>
+
+    {{ govukSummaryList({
+      rows: [
+      {
+        key: { text: "What type of encounter did you have?" },
+        value: { text: data["encounter-type"] if data["encounter-type"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/encounter-type",
+            text: "Change",
+            visuallyHiddenText: "what type of encounter did you have?"
+          }]
+        }
+      },
+      {
+        key: { text: "When did the encounter happen?" },
+        value: { text: data["encounter-date"] if data["encounter-date"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/encounter-date",
+            text: "Change",
+            visuallyHiddenText: "when did the encounter happen?"
+          }]
+        }
+      },
+      {
+        key: { text: "Where did the encounter happen?" },
+        value: { text: data["encounter-location"] if data["encounter-location"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/encounter-location",
+            text: "Change",
+            visuallyHiddenText: "where did the encounter happen?"
+          }]
+        }
+      },
+      {
+        key: { text: "Did anyone else witness the encounter?" },
+        value: { text: data["witnessed-by-others"] if data["witnessed-by-others"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/witnessed-by-others",
+            text: "Change",
+            visuallyHiddenText: "did anyone else witness the encounter?"
+          }]
+        }
+      },
+      {
+        key: { text: "Describe what happened during your encounter" },
+        value: { text: data["encounter-description"] if data["encounter-description"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/encounter-description",
+            text: "Change",
+            visuallyHiddenText: "describe what happened during your encounter"
+          }]
+        }
+      }
+      ]
+    }) }}
+
+    <form method="post" novalidate>
+      {{ govukButton({ text: "Confirm and send" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
