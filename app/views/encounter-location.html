@@ -1,0 +1,36 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Where did the encounter happen?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["encounter-location"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["encounter-location"], href: "#encounter-location" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukInput({
+      id: "encounter-location",
+      name: "encounter-location",
+      label: {
+        text: "Where did the encounter happen?",
+        isPageHeading: true,
+        classes: "govuk-label--l"
+      },
+      hint: { text: "Include the town or city, and country if outside the UK" },
+      errorMessage: errors["encounter-location"] if errors else null,
+      value: data["encounter-location"]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
